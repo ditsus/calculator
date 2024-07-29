@@ -1,0 +1,50 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#container {
+    width: 400px;
+    height: 600px;
+    background-color: gray;
+    padding: 5px;
+    box-sizing: border-box;
+    border-radius: 20px;
+}
+
+.number, .operator, .clear, #display {
+    background-color: rgb(155, 155, 155); 
+    box-sizing: border-box;
+    border: 1px solid black;
+    height: 108px;
+    width: 94px;
+    margin: 5px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    font-size: 30px;
+}
+
+#display {
+    width: 380px;
+    height: 108px;
+    background-color: black;
+    color: white;
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    padding-right: 25px;
+}
+
+.row, .container{
+    display: flex;
+    justify-content: space-evenly;
+    /* margin: 10px; */
+}
