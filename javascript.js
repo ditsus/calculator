@@ -29,46 +29,73 @@ function operate(numOne, numTwo, operator) {
     }
 }
 
-let numOne = "", numTwo = "", operation = "", solution = "";
+let numOne = "", numTwo = "", operation = "", solution = "", flag = false;
 
 let displayValue = document.querySelector("#display");
 let num = document.querySelectorAll(".number");
 let operator = document.querySelectorAll(".operator");
 
 num.forEach((i) => i.addEventListener("click", (event) => {
-    if (solution != "") {
-        solution = "";
+    if (displayValue.textContent === "+" || displayValue.textContent === "-" || displayValue.textContent === "*" || displayValue.textContent === "/" || flag) {
+        displayValue.textContent = "";
+        flag = false;
+    }
+    if (displayValue.textContent.includes("Press")) {
         numOne = "";
         numTwo = "";
         operation = "";
+        solution = "";
         displayValue.textContent = "";
     }
-    if (displayValue.textContent === "+" || displayValue.textContent === "-" || displayValue.textContent === "*" || displayValue.textContent === "/") {
-        displayValue.textContent = "";
+    else if (parseInt(i.textContent) === 0 && operation === "/") {
+        displayValue.textContent = "Nice Try | Press anything to reset";
     }
-    displayValue.textContent += i.textContent;
-    if (operation !== "") {
-        numTwo += i.textContent;
-    }
-    else {
+    else if (numTwo === "" && operation === "") {
         numOne += i.textContent;
+        displayValue.textContent += i.textContent;
+    }
+    else if (numOne !== "" && operation !== "") {
+        numTwo += i.textContent;
+        displayValue.textContent += i.textContent;
     }
 }));
 
 operator.forEach((i) => i.addEventListener("click", (event) => {
-    if (i.textContent === "=") {
-        solution = operate(parseInt(numOne), parseInt(numTwo), operation);
-        displayValue.textContent = solution;
-    }
-    else if (i.textContent === "C") {
-        solution = "";
+    if (displayValue.textContent.includes("Press")) {
         numOne = "";
         numTwo = "";
         operation = "";
+        solution = "";
         displayValue.textContent = "";
     }
-    else {
+    else if (i.textContent === "=" && (numOne === "" || numTwo === "" || operation === "")) {
+        displayValue.textContent = "Please enter a valid expression | Press anything to reset";
+    }
+    else if (i.textContent === "C") {
+        numOne = "";
+        numTwo = "";
+        operation = "";
+        solution = "";
+        displayValue.textContent = "";
+    }
+    else if (i.textContent === "=") {
+        solution = operate(parseInt(numOne), parseInt(numTwo), operation);
+        displayValue.textContent = solution;
+        numOne = solution;
+        numTwo = "";
+        operation = "";
+    }
+    else if (numOne !== "" && numTwo === "" && operation === "") {
         operation = i.textContent;
         displayValue.textContent = i.textContent;
     }
+    else if (operation !== "" && numOne !== "" && numTwo !== "" ) {
+        solution = operate(parseInt(numOne), parseInt(numTwo), operation);
+        displayValue.textContent = solution;
+        numOne = solution;
+        numTwo = "";
+        operation = i.textContent;
+        flag = true;
+    }
 }));
+
